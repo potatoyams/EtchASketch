@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css"/>
+    </head>
+    <body>
+        <div id="main">
+
+        </div>
+        <br></br>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        </div>
+        <p id="demo"></p>
+        <div id="buttons">
+            <button id="clearAll">Clear All</button>
+        </div>
+    </body>
+
+    <script>
+        const slider= document.querySelector("#myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = "Value : " + slider.value; 
+        var sliderValue = slider.value;
+        slider.addEventListener("change", () => {sliderValue = slider.value
+        const mainTag = document.querySelector("#main");
+        mainTag.style.gridTemplateColumns = "repeat(" + sliderValue +", 1fr)";
+        mainTag.style.gridTemplateRows = "repeat(" + sliderValue +", 1fr)";
+        
+        while(mainTag.lastElementChild) {
+            mainTag.removeChild(mainTag.lastElementChild);
+        }
+
+        for (var i = 1; i <= sliderValue; i++) {
+            for (var j = 1; j <= sliderValue; j++) {
+                const currColDiv = document.createElement("div");
+                currColDiv.style.border = '1px solid';
+                currColDiv.style.gridColumn = j + "";
+                currColDiv.style.gridRow = i + "";
+                currColDiv.addEventListener("mouseover", () => {currColDiv.style.backgroundColor = "black"});
+                mainTag.appendChild(currColDiv);
+            }
+        }});
+        
+        slider.addEventListener("input", () => {
+            var output = document.getElementById("demo");
+            output.innerHTML = "Value : " + slider.value;     
+        })
+
+        const mainTag = document.querySelector("#main");
+        mainTag.style.display = 'grid';
+        mainTag.style.gridTemplateColumns = "repeat(" + sliderValue +", 1fr)";
+        mainTag.style.gridTemplateRows = "repeat(" + sliderValue +", 1fr)";
+
+        for (var i = 1; i <= sliderValue; i++) {
+            for (var j = 1; j <= sliderValue; j++) {
+                const currColDiv = document.createElement("div");
+                currColDiv.style.border = '1px solid';
+                currColDiv.style.gridColumn = j + "";
+                currColDiv.style.gridRow = i + "";
+
+
+                currColDiv.addEventListener("mouseover", () => {currColDiv.style.backgroundColor = "black"});
+                mainTag.appendChild(currColDiv);
+            }
+        }
+
+        const clearAllButton = document.querySelector("#clearAll");
+        clearAllButton.addEventListener("click", () => { 
+            const mainTag = document.querySelector("#main");
+            const child = mainTag.childNodes;
+            for (let i = 1; i < child.length; i++) {
+                child[i].style.backgroundColor = "transparent";
+            }
+        }); 
+    </script>
+</html>
